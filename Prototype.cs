@@ -64,6 +64,10 @@ namespace Training
                Amount = amount
            };
         }
+        public void GenerateReceipt()
+        {
+            Console.WriteLine($"Receipt: {User.Name} bought {Product.Name} for {Amount}");
+        }
 
         public Purchase CloneAndModify(User user = null, Product? product = null, Operation? operation =null, int? amount =null)
         {

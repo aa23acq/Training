@@ -38,20 +38,33 @@ Console.WriteLine("Hello, World!");
 //IHouseBuilder builder = new HouseBuilder();
 //Logger.Instance.Log(builder.BuildWalls(4).BuildDoors(2).BuildWindows(4).BuildRoof().Build().ToString());
 
-var user1 = new User("John Doe", "123 Main St", "john@gmail.com");
-var product1 = new Product(1,"Laptop", 1000);
-var initialPurchase = new Purchase
-{
-    User = user1,
-    Product = product1,
-    Date = DateTime.Now,
-    Operation = Operation.SELL,
-    Amount = 100
-};
+//var user1 = new User("John Doe", "123 Main St", "john@gmail.com");
+//var product1 = new Product(1,"Laptop", 1000);
+//var initialPurchase = new Purchase
+//{
+//    User = user1,
+//    Product = product1,
+//    Date = DateTime.Now,
+//    Operation = Operation.SELL,
+//    Amount = 100
+//};
 
-Console.WriteLine($"Initial Purchace: {initialPurchase.User.Name} bought {initialPurchase.Product.Name} for {initialPurchase.Amount}");
+//initialPurchase.GenerateReceipt();
+//var user2 = new User("Jane Doe", "123 Main St", "jane#gmail.com");
+//var clonedPurchase = initialPurchase.CloneAndModify(user:user2, amount:300);
+//clonedPurchase.GenerateReceipt();
 
-var user2 = new User("Jane Doe", "123 Main St", "jane#gmail.com");
-var clonedPurchase = initialPurchase.CloneAndModify(user:user2, amount:300);
+IPaymentProcessor paymentProcessor = new IntrernalPaymentProcessor();
+paymentProcessor.ProcessPayment(100, "1234567890");
 
-Console.WriteLine($"Cloned Purchace: {clonedPurchase.User.Name} bought {clonedPurchase.Product.Name} for {clonedPurchase.Amount}");
+Console.WriteLine(paymentProcessor.ToString());
+
+var thirdPartyPaymentProcessor = new ThirdPartyPaymentProcessor();
+IPaymentProcessor paymentAdapter = new PaymentAdapter(thirdPartyPaymentProcessor);
+paymentAdapter.ProcessPayment(200, "0987654321");
+Console.WriteLine(paymentAdapter.ToString());
+
+Console.WriteLine($"Are both instances the same? {ReferenceEquals(paymentProcessor, paymentAdapter)}");
+
+
+
